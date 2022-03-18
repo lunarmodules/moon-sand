@@ -31,11 +31,17 @@ jobs:
         uses: leafo/gh-actions-luarocks@v4
         with:
           luarocksVersion: ${{ matrix.luarocksVersion }}
-      - name: Confirm rockspec builds
+      - name: Confirm dev rockspec(s) build
+        if: ${{ !startsWith(matrix.rockspec, 'rockspecs/') }}
+        run: |
+          set -x
+          args="--lua-version ${{ matrix.luaVersion }}"
+          luarocks make --pack-binary-rock $args -- ${{ matrix.rockspec }}
+      - name: Confirm tagged rockspec(s) build
+        if: ${{ startsWith(matrix.rockspec, 'rockspecs/') }}
         run: |
           set -x
           args="--lua-version ${{ matrix.luaVersion }}"
           set -euo pipefail
-          ref=${{ github.ref_name}}
-          git tag | grep -Fxq $ref || args+="${{ startsWith(matrix.rockspec, 'rockspecs/') && format(' --branch {0}', github.sha) || '' }}"
+          git tag | grep -Fxq ${{ github.ref_name}} || args+=" --branch ${{ github.sha }}"
           luarocks build --pack-binary-rock $args -- ${{ matrix.rockspec }}

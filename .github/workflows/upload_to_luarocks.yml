@@ -28,17 +28,14 @@ jobs:
       - name: Setup dependencies
         run: |
           luarocks install dkjson
-      - name: Pack rock
+      - name: Upload dev rockspec(s) to luarocks
+        if: ${{ !startsWith(matrix.rockspec, 'rockspecs/') }}
+          set -x
+          args="--temp-key ${{ secrets.apikey }}"
+          luarocks upload --force --skip-pack $args -- $rockspec
+      - name: Upload tagged rockspec(s) to luarocks
         if: ${{ startsWith(matrix.rockspec, 'rockspecs/') }}
-        run: |
-          luarocks pack -- ${{ matrix.rockspec }}
-      - name: Upload to luarocks.org
-        if: ${{ contains(matrix.rockspec, github.ref_name) || !startsWith(matrix.rockspec, 'rockspecs/') }}
         run: |
           set -x
           args="--temp-key ${{ secrets.apikey }}"
-          args+="${{ startsWith(matrix.rockspec, 'rockspecs/') || ' --force' }}"
-          rockspec="${{ matrix.rockspec }}"
-          luarocks upload $args -- $rockspec ${rockspec%.rockspec}.src.rock
-
-  #   # if: ${{ startsWith(github.ref, 'refs/tags/v')
+          luarocks upload $args -- $rockspec
