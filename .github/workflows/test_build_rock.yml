@@ -37,5 +37,5 @@ jobs:
           args="--lua-version ${{ matrix.luaVersion }}"
           set -euo pipefail
           ref=${{ github.ref_name}}
-          git tag | grep -Fxq $ref || args+="${{ startsWith(matrix.rockspec, 'rockspecs/') && format('--branch {0}', github.sha) }}"
+          git tag | grep -Fxq $ref || args+="${{ startsWith(matrix.rockspec, 'rockspecs/') && format(' --branch {0}', github.sha) || '' }}"
           luarocks build --pack-binary-rock $args -- ${{ matrix.rockspec }}
