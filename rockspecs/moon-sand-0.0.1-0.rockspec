@@ -1,7 +1,7 @@
 rockspec_format = "3.0"
 package = "moon-sand"
 
-local _version = "dev"
+local _version = "0.0.1"
 local _rockrel = "0"
 local _github = "lunarmodules"
 
