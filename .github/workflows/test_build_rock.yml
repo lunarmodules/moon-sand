@@ -33,6 +33,7 @@ jobs:
           luarocksVersion: ${{ matrix.luarocksVersion }}
       - name: Confirm rockspec builds
         run: |
+          set -x
           args="--lua-version ${{ matrix.luaVersion }}"
           set -euo pipefail
           ref=${{ github.ref_name}}
