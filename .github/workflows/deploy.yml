@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         rockspec: ${{ fromJSON(needs.affected.outputs.rockspecs) }}
-    uses: ./.github/workflows/test_build_rock
+    uses: ./.github/workflows/test_build_rock.yml
     with:
       rockspec: ${{ matrix.rockspec }}
 
