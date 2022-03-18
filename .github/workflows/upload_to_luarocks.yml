@@ -30,6 +30,7 @@ jobs:
           luarocks install dkjson
       - name: Upload dev rockspec(s) to luarocks
         if: ${{ !startsWith(matrix.rockspec, 'rockspecs/') }}
+        run: |
           set -x
           args="--temp-key ${{ secrets.apikey }}"
           luarocks upload --force --skip-pack $args -- $rockspec
