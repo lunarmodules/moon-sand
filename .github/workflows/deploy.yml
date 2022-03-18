@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/list_affected_rockspecs.yml
 
   build:
-    if: ${{ needs.affected.outputs.rockspecs }}
+    # if: ${{ needs.affected.outputs.rockspecs }}
     uses: ./.github/workflows/test_build_rock.yml
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
