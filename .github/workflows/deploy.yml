@@ -16,6 +16,9 @@ jobs:
 
   upload:
     needs: [ affected, build ]
+    if: ${{ needs.affected.outputs.rockspecs }}
     uses: ./.github/workflows/upload_to_luarocks.yml
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
+    secrets:
+      apikey: ${{ secrets.LUAROCKS_APIKEY }}

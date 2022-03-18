@@ -6,6 +6,9 @@ on:
       rockspecs:
         required: true
         type: string
+    secrets:
+      apikey:
+        required: true
 
 jobs:
   upload:
@@ -29,7 +32,7 @@ jobs:
       # --force
       - name: Upload to luarocks.org
         run: |
-          luarocks upload --api-key ${{ secrets.LUAROCKS_APIKEY }} -- ${{ matrix.rockspec }}
+          luarocks upload --api-key ${{ secrets.apikey }} -- ${{ matrix.rockspec }}
 
   #   # if: ${{ startsWith(github.ref, 'refs/tags/v') && github.repository == 'lunarmodules/moon-sand' }}
   #   if: ${{ github.ref_name == 'main' && github.repository == 'lunarmodules/moon-sand' }}
