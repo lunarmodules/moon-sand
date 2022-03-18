@@ -16,6 +16,10 @@ jobs:
 
   upload:
     needs: [ affected, build ]
+    strategy:
+      fail-fast: false
+      matrix:
+        rockspec: [ "pseudo real", "totally bogus" ]
     uses: ./.github/workflows/upload_to_luarocks.yml
     with:
-      rockspec: not real
+      rockspec: ${{ matrix.rockspec }}
