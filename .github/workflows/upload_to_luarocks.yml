@@ -33,6 +33,7 @@ jobs:
         run: |
           luarocks pack -- ${{ matrix.rockspec }}
       - name: Upload to luarocks.org
+        if: ${{ contains(matrix.rockspec, github.ref_name) || !startsWith(matrix.rockspec, 'rockspecs/') }}
         run: |
           args="--temp-key ${{ secrets.apikey }}"
           args+="${{ startsWith(matrix.rockspec, 'rockspecs/') || ' --force' }}"

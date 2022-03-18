@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup ‘lua’
         uses: leafo/gh-actions-lua@v9
         with:
@@ -32,4 +34,7 @@ jobs:
       - name: Confirm rockspec builds
         run: |
           args="--lua-version ${{ matrix.luaVersion }}"
-          luarocks --local build $args -- ${{ matrix.rockspec }}
+          set -euo pipefail
+          ref=${{ github.ref_name}}
+          git tag | grep -Fxq $ref || args+=" --branch ${{ github.sha }}"
+          luarocks --local build --no-install $args -- ${{ matrix.rockspec }}
