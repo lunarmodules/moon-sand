@@ -5,7 +5,7 @@ on: [ push, workflow_dispatch ]
 jobs:
 
   affected:
-    uses: ./affected_rockspecs.yml
+    uses: ./.github/workflows/affected_rockspecs.yml
 
   build:
     needs: affected
