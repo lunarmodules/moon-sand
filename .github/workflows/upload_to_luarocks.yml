@@ -28,11 +28,8 @@ jobs:
       - name: Setup dependencies
         run: |
           luarocks install dkjson
-      # --skip-pack
-      # --force
-      - name: Upload to luarocks.org
+      - name: Upload rockspec to luarocks.org
         run: |
-          luarocks upload --api-key ${{ secrets.apikey }} -- ${{ matrix.rockspec }}
+          luarocks upload ${{ contains(matrix.rockspec, '-dev-') && '--force --skip-pack' }} --api-key ${{ secrets.apikey }} -- ${{ matrix.rockspec }}
 
-  #   # if: ${{ startsWith(github.ref, 'refs/tags/v') && github.repository == 'lunarmodules/moon-sand' }}
-  #   if: ${{ github.ref_name == 'main' && github.repository == 'lunarmodules/moon-sand' }}
+  #   # if: ${{ startsWith(github.ref, 'refs/tags/v')
