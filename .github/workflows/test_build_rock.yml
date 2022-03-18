@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Test build rockspec into rock
+    name: Test build rockspec
     strategy:
       fail-fast: false
       matrix:

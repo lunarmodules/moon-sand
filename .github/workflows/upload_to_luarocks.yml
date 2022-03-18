@@ -1,0 +1,41 @@
+name: Upload to LuaRocks
+
+on:
+  workflow_call:
+    inputs:
+      dev:
+        type: boolean
+        default: false
+        required: false
+      rockspec:
+        required: true
+        type: string
+
+jobs:
+  upload:
+    name: Build rock and upload to LuaRocks
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup ‘lua’
+        uses: leafo/gh-actions-lua@v9
+      - name: Setup ‘luarocks’
+        uses: leafo/gh-actions-luarocks@v4
+      - run: echo "Just got spec ${{ inputs.rockspec }}"
+
+  #   # if: ${{ needs.affected.outputs.rockspecs && startsWith(github.ref, 'refs/tags/v') && github.repository == 'lunarmodules/moon-sand' }}
+  #   if: ${{ needs.affected.outputs.rockspecs && github.ref_name == 'main' && github.repository == 'lunarmodules/moon-sand' }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       rockspec: ${{ fromJSON(needs.affected.outputs.rockspecs) }}
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Setup dependencies
+  #       run: |
+  #         luarocks install dkjson
+  #     - run: |
+  #         luarocks upload --force --api-key ${{ secrets.LUAROCKS_APIKEY }} -- ${{ matrix.rockspec }}
