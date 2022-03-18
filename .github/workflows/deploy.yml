@@ -1,35 +1,13 @@
 name: Deploy
 
-on:
-  push:
-    paths:
-      - '*.rockspec'
-      - 'rockspecs/*.rockspec'
+on: [ push, workflow_dispatch ]
 
 jobs:
 
-  affected_dev: &affected
-    runs-on: ubuntu-20.04
-    outputs:
-      rockspecs: '["${{ steps.changed-files.outputs.all_modified_files }}"]'
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
-    - id: changed-files
-      uses: tj-actions/changed-files@v18
-      with:
-        files: '*.rockspec'
-        separator: '", "'
+  affected:
+    uses: ./.github/workflows/affected_rockspects.yml
 
-  affected_tagged: *affected
-
-    # - id: changed-files
-    #   with:
-    #     files: 'rockspecs/*.rockspec'
-
-  build_dev:
+  build:
     needs: affected
     if: ${{ needs.affected_dev.outputs.rockspecs }}
     strategy:
@@ -44,6 +22,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get affected rockspecs
+        uses: ./.github/workflows/affected_rockspects.yml
       - name: Setup ‘lua’
         uses: leafo/gh-actions-lua@v9
         with:
