@@ -31,4 +31,6 @@ jobs:
           luarocksVersion: ${{ matrix.luarocksVersion }}
       - name: Confirm rockspec builds
         run: |
-          luarocks --local build --lua-version ${{ matrix.luaVersion }} -- ${{ matrix.rockspec }}
+          args="--lua-version ${{ matrix.luaVersion }}"
+          args+="${{ contains(matrix.rockspec, github.ref_name) && join([' --branch', github.sha], ' ') }}"
+          luarocks --local build $args -- ${{ matrix.rockspec }}
