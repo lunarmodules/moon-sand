@@ -43,5 +43,5 @@ jobs:
           set -x
           args="--lua-version ${{ matrix.luaVersion }}"
           set -euo pipefail
-          git tag | grep -Fxq ${{ github.ref_name}} || args+=" --branch ${{ github.sha }}"
+          git tag | grep -Fxq ${{ github.ref_name}} || args+=" --branch ${{ github.ref_name }}"
           luarocks build --pack-binary-rock $args -- ${{ matrix.rockspec }}
