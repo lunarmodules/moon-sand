@@ -14,8 +14,8 @@ jobs:
       matrix:
         rockspec: ${{ fromJSON(needs.affected.outputs.rockspecs) }}
     uses: ./.github/workflows/test_build_rock
-      with:
-        rockspec: ${{ matrix.rockspec }}
+    with:
+      rockspec: ${{ matrix.rockspec }}
 
   # upload:
   #   needs: [affected, build]
