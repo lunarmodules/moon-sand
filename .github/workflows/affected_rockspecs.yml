@@ -1,11 +1,15 @@
+name: List affected rockspecs
+
 on:
   workflow_call:
     outputs:
-      rockspecs: ${{ jobs.affected.outputs.rockspecs }}
+      rockspecs:
+        description: "Array of touched rockspec files"
+        value: ${{ jobs.affected.outputs.rockspecs }}
 
 jobs:
-
   affected:
+    name: Find rockspecs touched in latest commit
     runs-on: ubuntu-20.04
     outputs:
       rockspecs: '["${{ steps.changed-files.outputs.all_modified_files }}"]'
