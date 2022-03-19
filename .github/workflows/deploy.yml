@@ -16,7 +16,7 @@ jobs:
 
   upload:
     needs: [ affected, build ]
-    if: ${{ needs.affected.outputs.rockspecs && github.ref_name == 'main' && github.repository == 'lunarmodules/moon-sand' }}
+    if: ${{ needs.affected.outputs.rockspecs && (github.ref_name == 'main' || startsWith(github.ref, 'refs/tags/')) && github.repository == 'lunarmodules/moon-sand' }}
     uses: ./.github/workflows/upload_to_luarocks.yml
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
