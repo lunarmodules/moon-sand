@@ -1,7 +1,7 @@
 rockspec_format = "3.0"
 package = "moon-sand"
 
-local _version = "dev"
+local _version = "0.0.2"
 local _rockrel = "0"
 local _github = "lunarmodules"
 
@@ -9,7 +9,7 @@ version = _version .. "-" .. _rockrel
 
 source = {
    url = "git+https://github.com/".._github.."/"..package..".git",
-   branch = _version == "dev" and "main" or _version
+   branch = _version == "dev" and "main" or "v".._version
 }
 
 description = {
