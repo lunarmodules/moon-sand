@@ -31,5 +31,5 @@ jobs:
       - name: Upload rockspec to luarocks
         run: |
           args="--temp-key ${{ secrets.apikey }}"
-          args+="${{ startsWith(matrix.rockspec, 'rockspecs/') && '' || ' --force --skip-pack' }}"
+          args+="${{ !startsWith(matrix.rockspec, 'rockspecs/') && ' --force --skip-pack' || '' }}"
           luarocks upload $args -- ${{ matrix.rockspec }}
