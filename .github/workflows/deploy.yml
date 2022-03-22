@@ -5,12 +5,12 @@ on: [ push, workflow_dispatch ]
 jobs:
 
   affected:
-    uses: "lunarmodules/.github/workflows/list_affected_rockspecs.yml@main"
+    uses: alerque/lunarmodules-org-meta/.github/workflows/list_affected_rockspecs.yml@main
 
   build:
     needs: affected
     if: ${{ needs.affected.outputs.rockspecs }}
-    uses: lunarmodules/.github/workflows/test_build_rock.yml@main
+    uses: alerque/lunarmodules-org-meta/.github/workflows/test_build_rock.yml@main
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
 
@@ -21,8 +21,8 @@ jobs:
     # 2. The current commit is either tagged or on the default branch (the workflow will upload dev/scm rockspecs any
     #    time they are touched, tagged ones whenever the edited rockspec and tag match)
     # 3. We are on the canonical repository (no uploads from forks)
-    if: ${{ needs.affected.outputs.rockspecs && (github.ref_name == 'master' || startsWith(github.ref, 'refs/tags/')) && github.repository == 'lunarmodules/luaexpat' }}
-    uses: lunarmodules/.github/workflows/upload_to_luarocks.yml@main
+    if: ${{ needs.affected.outputs.rockspecs && (github.ref_name == 'master' || startsWith(github.ref, 'refs/tags/')) && github.repository == 'lunarmodules/moon-sand' }}
+    uses: alerque/lunarmodules-org-meta/.github/workflows/upload_to_luarocks.yml@main
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
     secrets:
