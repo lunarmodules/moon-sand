@@ -19,7 +19,7 @@ jobs:
 
   build:
     needs: [ affected, debug ]
-    if: ${{ needs.affected.outputs.rockspecs }}
+    if: ${{ ! needs.affected.outputs.rockspecs }}
     uses: lunarmodules/.github/.github/workflows/test_build_rock.yml@main
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
