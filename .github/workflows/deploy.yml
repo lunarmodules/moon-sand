@@ -5,7 +5,7 @@ on: [ push, workflow_dispatch ]
 jobs:
 
   affected:
-    uses: lunarmodules/.github/workflows/list_affected_rockspecs.yml@main
+    uses: "lunarmodules/.github/workflows/list_affected_rockspecs.yml@main"
 
   build:
     needs: affected
