@@ -5,21 +5,11 @@ on: [ push, workflow_dispatch ]
 jobs:
 
   affected:
-    uses: alerque/lunarmodules-org-meta/.github/workflows/list_affected_rockspecs.yml@main
-
-  debug:
-    needs: affected
-    runs-on: ubuntu-20.04
-    if: ${{ needs.affected.outputs.rockspecs }}
-    steps:
-      - name: debug
-        run: echo "GOT ${{ needs.affected.outputs.rockspecs }}"
-      - name: flunk
-        run: exit 1
+    uses: lunarmodules/.github/.github/workflows/list_affected_rockspecs.yml@main
 
   build:
-    needs: [ affected, debug ]
-    if: ${{ ! needs.affected.outputs.rockspecs }}
+    needs: affected
+    if: ${{ needs.affected.outputs.rockspecs }}
     uses: lunarmodules/.github/.github/workflows/test_build_rock.yml@main
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
