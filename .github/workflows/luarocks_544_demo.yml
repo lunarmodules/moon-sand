@@ -22,5 +22,7 @@ jobs:
       uses: leafo/gh-actions-luarocks@v4
       with:
         luarocksVersion: ${{ matrix.luarocksVersion }}
+    - name: List installed rocks after default action init
+      run: luarocks list
     - name: Test if Luarocks can download something
       run: luarocks install busted

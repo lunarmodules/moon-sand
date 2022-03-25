@@ -1,4 +1,4 @@
-name: Demo Action Issue
+name: Demo Action Issue 8
 
 on: [push, pull_request]
 
