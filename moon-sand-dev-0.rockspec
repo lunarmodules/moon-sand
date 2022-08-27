@@ -1,15 +1,16 @@
-rockspec_format = "3.0"
 package = "moon-sand"
+local rock_version = "dev"
+local rock_release = "0"
+local namespace = "lunarmodules"
+local repository = package
 
-local _version = "dev"
-local _rockrel = "0"
-local _github = "lunarmodules"
-
-version = _version .. "-" .. _rockrel
+rockspec_format = "3.0"
+version = ("%s-%s"):format(rock_version, rock_release)
 
 source = {
-   url = "git+https://github.com/".._github.."/"..package..".git",
-   branch = _version == "dev" and "main" or _version
+  url = ("git+https://github.com/%s/%s.git"):format(namespace, repository),
+  branch = rock_version == "scm" and "master" or nil,
+  tag = rock_version ~= "scm" and "v"..rock_version or nil,
 }
 
 description = {
@@ -18,8 +19,8 @@ description = {
       Just for testing automated deployments via CI, not a useful module
     ]],
    license = "MIT",
-   homepage = "https://".._github..".github.io/"..package,
-   issues_url = "https://github.com/".._github.."/"..package.."/issues",
+  homepage = ("https://%s.github.io/%s"):format(namespace, repository),
+  issues_url = ("https://github.com/%s/%s/issues"):format(namespace, repository),
    maintainer = "Caleb Maclennan <caleb@alerque.com>",
 }
 
@@ -34,4 +35,4 @@ build = {
    }
 }
 
--- touch to trigger workflow 8
+-- touch to trigger workflow 0
