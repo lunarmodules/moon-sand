@@ -5,12 +5,12 @@ on: [ push, pull_request, workflow_dispatch ]
 jobs:
 
   affected:
-    uses: lunarmodules/.github/.github/workflows/list_affected_rockspecs.yml@sandbox
+    uses: lunarmodules/.github/.github/workflows/list_affected_rockspecs.yml@848acf262dadcf460aca214e2850f3d452237f28 # sandbox
 
   build:
     needs: affected
     if: ${{ needs.affected.outputs.rockspecs }}
-    uses: lunarmodules/.github/.github/workflows/test_build_rock.yml@sandbox
+    uses: lunarmodules/.github/.github/workflows/test_build_rock.yml@848acf262dadcf460aca214e2850f3d452237f28 # sandbox
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
 
@@ -25,7 +25,7 @@ jobs:
         github.repository == 'lunarmodules/moon-sand' &&
         needs.affected.outputs.rockspecs
       }}
-    uses: lunarmodules/.github/.github/workflows/upload_to_luarocks.yml@sandbox
+    uses: lunarmodules/.github/.github/workflows/upload_to_luarocks.yml@848acf262dadcf460aca214e2850f3d452237f28 # sandbox
     with:
       rockspecs: ${{ needs.affected.outputs.rockspecs }}
     secrets:
